@@ -83,7 +83,7 @@ export default function Page() {
     window.location.href = checkoutUrl.toString();
   };
 
-  const fullJuzQaris = [
+  const fullJuzQoris = [
     'Abdul Basit Abdus Samad',
     'Abdurahman Sudais',
     'Maher Al-Muaiqaly',
@@ -109,7 +109,7 @@ export default function Page() {
     'Abdullah Awad Al-Juhani'
   ];
 
-  const juzAmmaQaris = [
+  const juzAmmaQoris = [
     'Muhammad Thaha Al-Junaid (Anak)',
     'Ahmed Saoud (Anak)',
     'Metode Ummi',
@@ -126,14 +126,14 @@ export default function Page() {
   ];
 
   const features = [
-    { icon: Music, text: '36++ Bacaan Qari Internasional & Nasional' },
+    { icon: Music, text: '36++ Bacaan Qori Internasional & Nasional' },
     { icon: Book, text: 'Full 30 Juz (Lengkap Al-Qur\'an)' },
     { icon: Download, text: 'Juz 30 (Juz Amma) untuk Anak' },
     { icon: Star, text: 'Audio Jernih & Berkualitas Tinggi' },
-    { icon: Check, text: 'File Tertata Rapi (Per Qari/Juz)' },
+    { icon: Check, text: 'File Tertata Rapi (Per Qori/Juz)' },
     { icon: Shield, text: 'Akses Selamanya (Milik Anda)' },
     { icon: Smartphone, text: 'Bisa di HP, Laptop, Speaker' },
-    { icon: Zap, text: 'Update 1 Qari Baru/Minggu 🔄' },
+    { icon: Zap, text: 'Update 1 Qori Baru/Minggu 🔄' },
     { icon: Star, text: 'BONUS: Sholawat + Azan Dunia' },
     { icon: WifiOff, text: 'Tanpa Iklan, Tanpa Langganan' },
   ];
@@ -158,7 +158,7 @@ export default function Page() {
     },
     {
       q: 'Apakah ada update?',
-      a: 'Ya! Setiap minggu dapat +1 qari baru GRATIS selamanya. Anda akan mendapat link update via email.'
+      a: 'Ya! Setiap minggu dapat +1 qori baru GRATIS selamanya. Anda akan mendapat link update via email.'
     },
     {
       q: 'Ada batas waktu akses?',
@@ -213,7 +213,7 @@ export default function Page() {
             className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight"
           >
             Dengarkan <span className="text-gold-400">36++ Bacaan</span><br />
-            Al-Qur'an dari Qari Terbaik Dunia
+            Al-Qur'an dari Qori Terbaik Dunia
           </motion.h1>
 
           <motion.p
@@ -295,7 +295,7 @@ export default function Page() {
             {[
               { icon: Wifi, text: 'Streaming habis kuota & lemot' },
               { icon: X, text: 'File berantakan & tidak rapi' },
-              { icon: Music, text: 'Qari terbatas, cepat bosan' },
+              { icon: Music, text: 'Qori terbatas, cepat bosan' },
               { icon: DollarSign, text: 'Langganan mahal & terus bayar' },
             ].map((problem, idx) => (
               <motion.div
@@ -345,7 +345,7 @@ export default function Page() {
             {[
               {
                 icon: Music,
-                title: '36++ Qari Premium',
+                title: '36++ Qori Premium',
                 desc: 'Full 30 Juz + Juz Amma',
                 gradient: 'from-islamic-500 to-islamic-600'
               },
@@ -358,7 +358,7 @@ export default function Page() {
               {
                 icon: Zap,
                 title: 'Update Gratis',
-                desc: 'Setiap Minggu +1 Qari Baru',
+                desc: 'Setiap Minggu +1 Qori Baru',
                 gradient: 'from-gold-500 to-gold-600'
               },
             ].map((solution, idx) => (
@@ -432,7 +432,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Qari List Section */}
+      {/* Qori List Section */}
       <section className="py-20 bg-gradient-to-br from-gray-50 to-islamic-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -443,7 +443,7 @@ export default function Page() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-              🎙️ Dibacakan Qari Terbaik Dunia
+              🎙️ Dibacakan Qori Terbaik Dunia
             </h2>
           </motion.div>
 
@@ -458,7 +458,7 @@ export default function Page() {
                     : 'text-gray-600 hover:text-islamic-600'
                 }`}
               >
-                Full 30 Juz ({fullJuzQaris.length})
+                Full 30 Juz ({fullJuzQoris.length})
               </button>
               <button
                 onClick={() => setActiveTab('juzamma')}
@@ -468,12 +468,12 @@ export default function Page() {
                     : 'text-gray-600 hover:text-islamic-600'
                 }`}
               >
-                Juz Amma ({juzAmmaQaris.length})
+                Juz Amma ({juzAmmaQoris.length})
               </button>
             </div>
           </div>
 
-          {/* Qari Lists */}
+          {/* Qori Lists */}
           <motion.div
             key={activeTab}
             initial={{ opacity: 0, y: 20 }}
@@ -481,7 +481,7 @@ export default function Page() {
             transition={{ duration: 0.4 }}
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-4"
           >
-            {(activeTab === 'full' ? fullJuzQaris : juzAmmaQaris).map((qari, idx) => (
+            {(activeTab === 'full' ? fullJuzQoris : juzAmmaQoris).map((qori, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -492,7 +492,7 @@ export default function Page() {
                 <div className="w-10 h-10 bg-gradient-to-br from-islamic-500 to-islamic-600 rounded-full flex items-center justify-center flex-shrink-0">
                   <Star className="w-5 h-5 text-white" />
                 </div>
-                <p className="text-gray-700 font-medium">{qari}</p>
+                <p className="text-gray-700 font-medium">{qori}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -505,7 +505,7 @@ export default function Page() {
             className="text-center mt-12 bg-gradient-to-r from-gold-50 to-islamic-50 border-2 border-gold-200 rounded-2xl p-8"
           >
             <p className="text-2xl font-bold text-gray-900">
-              🔄 <span className="text-gold-600">+1 Qari Baru</span> Setiap Minggu!
+              🔄 <span className="text-gold-600">+1 Qori Baru</span> Setiap Minggu!
             </p>
             <p className="text-gray-600 mt-2">Koleksi Anda terus bertambah tanpa biaya tambahan</p>
           </motion.div>
@@ -583,7 +583,7 @@ export default function Page() {
                     { feature: 'Butuh Internet', streaming: false, product: true, streamingText: 'Wajib', productText: 'Offline' },
                     { feature: 'Iklan', streaming: false, product: true, streamingText: 'Ada', productText: 'Bebas' },
                     { feature: 'Biaya', streaming: false, product: true, streamingText: 'Terus Bayar', productText: 'Sekali Bayar' },
-                    { feature: 'Jumlah Qari', streaming: false, product: true, streamingText: 'Terbatas', productText: '36++' },
+                    { feature: 'Jumlah Qori', streaming: false, product: true, streamingText: 'Terbatas', productText: '36++' },
                     { feature: 'Update', streaming: false, product: true, streamingText: '-', productText: 'Gratis' },
                     { feature: 'File Rapi', streaming: false, product: true, streamingText: '-', productText: 'Ya' },
                   ].map((row, idx) => (
@@ -635,7 +635,7 @@ export default function Page() {
           <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 md:p-12 mb-12 border border-white/20">
             <div className="space-y-6 mb-8">
               {[
-                { item: '36 Bacaan Qari @ Rp 30.000', price: 'Rp 1.080.000' },
+                { item: '36 Bacaan Qori @ Rp 30.000', price: 'Rp 1.080.000' },
                 { item: 'Bonus Sholawat Internasional', price: 'Rp 300.000' },
                 { item: 'Bonus Azan dari Berbagai Negara', price: 'Rp 250.000' },
                 { item: 'Kurasi & Update Mingguan', price: 'Rp 170.000' },
@@ -851,7 +851,7 @@ export default function Page() {
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="text-lg font-bold text-gray-900">Paket Lengkap Al-Qur'an</h4>
-                  <p className="text-gray-600 text-sm">36++ Bacaan Qari (30 Juz & Juz Amma)</p>
+                  <p className="text-gray-600 text-sm">36++ Bacaan Qori (30 Juz & Juz Amma)</p>
                 </div>
                 <div className="text-right">
                   <p className="text-3xl font-bold text-islamic-700">Rp 55.000</p>

@@ -22,7 +22,9 @@ import {
   Zap,
   Mail,
   Lock,
-  MessageCircle
+  MessageCircle,
+  User,
+  ArrowRight
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -36,6 +38,13 @@ export default function Page() {
   // Floating CTA Button
   const [showFloatingCTA, setShowFloatingCTA] = useState(false);
 
+  // Form state
+  const [formData, setFormData] = useState({
+    name: '',
+    email: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       setShowFloatingCTA(window.scrollY > 800);
@@ -47,6 +56,31 @@ export default function Page() {
   const scrollToCheckout = () => {
     const checkout = document.getElementById('checkout');
     checkout?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // Handle form submission - Redirect to Scalev with pre-filled data
+  const handleCheckout = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.name || !formData.email) {
+      alert('Mohon isi nama dan email Anda');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    // Build Scalev checkout URL with pre-filled data
+    // Note: Sesuaikan parameter sesuai dokumentasi Scalev
+    const checkoutUrl = new URL('https://prhatara.myscalev.com/c/checkout');
+    checkoutUrl.searchParams.append('variant_ids', '426515');
+    checkoutUrl.searchParams.append('qty', '1');
+    
+    // Pre-fill customer data (sesuaikan dengan parameter yang Scalev support)
+    checkoutUrl.searchParams.append('customer_name', formData.name);
+    checkoutUrl.searchParams.append('customer_email', formData.email);
+    
+    // Redirect ke halaman Scalev
+    window.location.href = checkoutUrl.toString();
   };
 
   const fullJuzQaris = [
@@ -775,9 +809,9 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Final CTA + Checkout */}
+      {/* CHECKOUT SECTION - CUSTOM FORM WITH REDIRECT */}
       <section id="checkout" className="py-20 bg-gradient-to-br from-islamic-50 via-white to-gold-50">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -798,7 +832,7 @@ export default function Page() {
             </div>
           </motion.div>
 
-          {/* Checkout Embed - Vertical Card */}
+          {/* CUSTOM CHECKOUT FORM */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -806,91 +840,134 @@ export default function Page() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-white rounded-3xl shadow-2xl overflow-hidden border-2 border-islamic-200"
           >
-            <div className="bg-gradient-to-r from-islamic-600 to-islamic-700 text-white py-6 px-8">
-              <h3 className="text-2xl font-bold text-center">Form Pemesanan</h3>
-              <p className="text-center text-islamic-100 mt-2">Lengkapi data untuk melanjutkan</p>
+            {/* Header */}
+            <div className="bg-gradient-to-r from-islamic-600 to-islamic-700 text-white py-8 px-8">
+              <h3 className="text-2xl font-bold text-center mb-2">Form Pemesanan</h3>
+              <p className="text-center text-islamic-100">Isi data Anda untuk melanjutkan ke pembayaran</p>
             </div>
             
-            <div className="p-4 md:p-8">
-              {/* Info Card */}
-              <div className="bg-gradient-to-br from-islamic-50 to-gold-50 rounded-2xl p-6 mb-6 border-2 border-islamic-200">
-                <h4 className="text-lg font-bold text-gray-900 mb-3 text-center">
-                  📝 Lengkapi Pemesanan Anda
-                </h4>
-                <p className="text-gray-700 text-center mb-4">
-                  Klik tombol di bawah untuk membuka form pemesanan di tab baru
-                </p>
-                <a
-                  href="https://prhatara.myscalev.com/c/checkout?variant_ids=426515&qty=1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full"
-                >
-                  <button className="w-full px-8 py-5 bg-gradient-to-r from-islamic-600 to-islamic-700 hover:from-islamic-700 hover:to-islamic-800 text-white text-xl font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3">
-                    <span>🛒 Buka Form Pemesanan</span>
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </button>
-                </a>
-                <p className="text-sm text-gray-500 text-center mt-3">
-                  Form akan terbuka di tab baru untuk kemudahan Anda
-                </p>
-              </div>
-
-              {/* Preview Frame - Optional */}
-              <div className="bg-gray-100 rounded-2xl p-4 border-2 border-gray-200">
-                <p className="text-center text-gray-600 text-sm mb-3">Preview Form Pemesanan:</p>
-                <iframe
-                  src="https://prhatara.myscalev.com/c/checkout?variant_ids=426515&qty=1"
-                  className="w-full h-[600px] border-0 rounded-xl bg-white"
-                  title="Checkout Form Preview"
-                  loading="lazy"
-                  sandbox="allow-scripts allow-same-origin"
-                />
-                <p className="text-center text-gray-500 text-xs mt-3">
-                  💡 Tip: Untuk pengalaman terbaik, gunakan tombol di atas untuk membuka form di tab baru
-                </p>
+            {/* Product Info */}
+            <div className="bg-gradient-to-br from-islamic-50 to-gold-50 p-6 border-b-2 border-islamic-100">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h4 className="text-lg font-bold text-gray-900">Paket Lengkap Al-Qur'an</h4>
+                  <p className="text-gray-600 text-sm">36++ Bacaan Qari (30 Juz & Juz Amma)</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-3xl font-bold text-islamic-700">Rp 55.000</p>
+                  <p className="text-sm text-gray-500 line-through">Rp 1.800.000</p>
+                </div>
               </div>
             </div>
 
-            {/* Trust Indicators Below Form */}
+            {/* Form */}
+            <form onSubmit={handleCheckout} className="p-8 md:p-10">
+              <div className="space-y-6">
+                {/* Nama Lengkap */}
+                <div>
+                  <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Nama Lengkap *
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <User className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="text"
+                      id="name"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="block w-full pl-12 pr-4 py-4 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-islamic-500 focus:border-islamic-500 text-gray-900 placeholder-gray-400 transition-all duration-200"
+                      placeholder="Masukkan nama lengkap Anda"
+                    />
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Email *
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <Mail className="h-5 w-5 text-gray-400" />
+                    </div>
+                    <input
+                      type="email"
+                      id="email"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="block w-full pl-12 pr-4 py-4 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-islamic-500 focus:border-islamic-500 text-gray-900 placeholder-gray-400 transition-all duration-200"
+                      placeholder="email@example.com"
+                    />
+                  </div>
+                  <p className="mt-2 text-xs text-gray-500">
+                    Link download akan dikirim ke email ini
+                  </p>
+                </div>
+
+                {/* Submit Button */}
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                  className={`w-full py-5 px-6 rounded-xl font-bold text-xl text-white transition-all duration-300 flex items-center justify-center gap-3 ${
+                    isSubmitting
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-islamic-600 to-islamic-700 hover:from-islamic-700 hover:to-islamic-800 shadow-xl hover:shadow-2xl'
+                  }`}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Memproses...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Lanjut ke Pembayaran</span>
+                      <ArrowRight className="w-6 h-6" />
+                    </>
+                  )}
+                </motion.button>
+              </div>
+            </form>
+
+            {/* Trust Badges */}
             <div className="bg-gradient-to-br from-islamic-50 to-gold-50 px-8 py-6 border-t-2 border-islamic-100">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { icon: Lock, text: 'Pembayaran Aman' },
-                  { icon: Shield, text: 'Data Terenkripsi' },
-                  { icon: Mail, text: 'Pengiriman Instant' },
+                  { icon: Lock, text: 'Aman & Terenkripsi' },
+                  { icon: Shield, text: 'Data Terlindungi' },
+                  { icon: Mail, text: 'Kirim Instant' },
                   { icon: Zap, text: 'Support 24/7' },
                 ].map((badge, idx) => (
                   <div key={idx} className="flex flex-col items-center gap-2">
-                    <badge.icon className="w-6 h-6 text-islamic-600" />
-                    <p className="text-xs md:text-sm font-medium text-gray-700">{badge.text}</p>
+                    <badge.icon className="w-5 h-5 text-islamic-600" />
+                    <p className="text-xs font-medium text-gray-700 text-center">{badge.text}</p>
                   </div>
                 ))}
               </div>
             </div>
           </motion.div>
 
-          {/* Additional Trust Section */}
+          {/* Payment Methods */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-8 text-center space-y-4"
+            className="mt-8 text-center"
           >
-            <div className="flex items-center justify-center gap-3 text-gray-600">
-              <Lock className="w-5 h-5 text-green-600" />
-              <p className="text-sm md:text-base">Transaksi dilindungi enkripsi SSL 256-bit</p>
-            </div>
-            <div className="flex items-center justify-center gap-3 text-gray-600">
-              <Mail className="w-5 h-5 text-blue-600" />
-              <p className="text-sm md:text-base">Link download dikirim otomatis ke email Anda</p>
-            </div>
-            <div className="flex items-center justify-center gap-3 text-gray-600">
-              <Zap className="w-5 h-5 text-gold-600" />
-              <p className="text-sm md:text-base">Akses langsung setelah pembayaran berhasil</p>
+            <p className="text-gray-600 mb-4 font-medium">Metode Pembayaran yang Tersedia:</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {['Transfer Bank', 'E-Wallet', 'QRIS', 'Virtual Account'].map((method, idx) => (
+                <div key={idx} className="px-4 py-2 bg-white rounded-full border-2 border-islamic-200 text-sm font-medium text-gray-700 shadow-sm">
+                  {method}
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>
